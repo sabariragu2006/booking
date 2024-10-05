@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller</title>
+</head>
+<body>
+    <form action="/seller" method="POST">
+        <label for="source">Source:</label>
+        <input type="text" name="source" id="source" placeholder="Enter the Source" required>
+        
+        <label for="destination">Destination:</label>
+        <input type="text" name="destination" id="destination" placeholder="Enter the Destination" required>
+        
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" placeholder="Enter the Price" required>
+        
+        <label for="ticket">No. of Tickets:</label>
+        <input type="number" name="ticket" id="ticket" placeholder="Enter the No. of Tickets" required>
+        
+        <label for="comments">Comments:</label>
+        <textarea name="comments" id="comments"></textarea>
+        
+        <button type="submit">Sell Ticket</button>
+    </form>
+    
+</body>
+</html>

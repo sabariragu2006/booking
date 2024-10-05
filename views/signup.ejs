@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <h1>Signup</h1>
+
+    <form action="/signup" method="post">
+        <label for="name">Username:</label>
+        <input type="text" name="name" id="name" placeholder="Enter the name" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" placeholder="Enter the password" id="password" required><br><br>
+        <button type="submit">Signup</button>
+    </form>
+    
+    <!-- Display the message if it exists -->
+    <% if (typeof message !== 'undefined') { %>
+        <!-- Check if the message is success or error based on a flag or message content -->
+        <% if (success) { %>
+            <p style="color: green;"><%= message %></p>
+        <% } else { %>
+            <p style="color: red;"><%= message %></p>
+        <% } %>
+    <% } %>
+</body>
+</html>
