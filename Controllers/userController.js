@@ -36,7 +36,6 @@ const signup = async (req, res) => {
 const loginLoad=async (req,res)=>{
     res.render('login');
 }
-
 const login = async (req, res) => {
     try {
         const check = await collection.findOne({ name: req.body.name });
@@ -47,7 +46,19 @@ const login = async (req, res) => {
         const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
         
         if (isPasswordMatch) {
-            res.render('home', { username: check.name });
+            // Check for search query
+            const searchSource = req.query.source; // Get the search input
+            let tickets;
+
+            if (searchSource) {
+                // Fetch tickets that match the source
+                tickets = await Ticket.find({ source: { $regex: searchSource, $options: 'i' } });  // Case insensitive search
+            } else {
+                // Fetch all tickets
+                tickets = await Ticket.find();  
+            }
+
+            res.render('home', { username: check.name, tickets: tickets });
         } else {
             res.render('login', { message: 'Wrong password', success: false });
         }
@@ -55,6 +66,7 @@ const login = async (req, res) => {
         res.render('login', { message: 'Login failed. Please try again.', success: false });
     }
 };
+
 
 const sellerLoad=async (req,res)=>{
     try {
@@ -77,9 +89,11 @@ const seller = async (req, res) => {
         const ticketData = await Ticket.create(data);
         console.log(ticketData);
 
+        // Render the seller page with a success message
         res.render('seller', { message: 'Ticket added successfully!', success: true });
     } catch (error) {
         console.log(error);
+        // Render the seller page with an error message
         res.render('seller', { message: 'Failed to add ticket.', success: false });
     }
 };
