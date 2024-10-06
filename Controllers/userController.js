@@ -46,19 +46,23 @@ const login = async (req, res) => {
         const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
         
         if (isPasswordMatch) {
-            // Check for search query
-            const searchSource = req.query.source; // Get the search input
+            const searchSource = req.query.source || ''; // Get the search input from the query string
             let tickets;
 
             if (searchSource) {
-                // Fetch tickets that match the source
-                tickets = await Ticket.find({ source: { $regex: searchSource, $options: 'i' } });  // Case insensitive search
+                // Fetch tickets that match the source using a case-insensitive search
+                tickets = await Ticket.find({ source: { $regex: searchSource, $options: 'i' } });
             } else {
-                // Fetch all tickets
+                // If no search query, return all tickets
                 tickets = await Ticket.find();  
             }
 
-            res.render('home', { username: check.name, tickets: tickets });
+            // Render the home page with the filtered tickets and pass searchQuery
+            res.render('home', { 
+                username: check.name, 
+                tickets: tickets, 
+                searchQuery: searchSource  // Pass searchQuery to the view
+            });
         } else {
             res.render('login', { message: 'Wrong password', success: false });
         }
@@ -66,6 +70,7 @@ const login = async (req, res) => {
         res.render('login', { message: 'Login failed. Please try again.', success: false });
     }
 };
+
 
 
 const sellerLoad=async (req,res)=>{
@@ -99,9 +104,32 @@ const seller = async (req, res) => {
 };
 
 
+const home = async (req, res) => {
+    try {
+        const searchSource = req.query.source; // Get the search input from the query string
+        let tickets;
+
+        if (searchSource) {
+            // Fetch tickets that match the source using a case-insensitive search
+            tickets = await Ticket.find({ source: { $regex: searchSource, $options: 'i' } });
+        } else {
+            // If no search query, return all tickets
+            tickets = await Ticket.find();  
+        }
+
+        // Render the home page with the filtered tickets
+        res.render('home', { username: req.body.username, tickets: tickets, searchQuery: searchSource || '' });
+    } catch (error) {
+        console.error(error);
+        res.render('home', { username: req.body.username, tickets: [], searchQuery: '', message: 'Search failed. Please try again.' });
+    }
+};
+
+// Route to handle GET request for the home page and search
+
 
 module.exports={
-    login,loginLoad,signup,signupLoad,seller,sellerLoad
+    login,loginLoad,signup,signupLoad,seller,sellerLoad,home
 }
 
 

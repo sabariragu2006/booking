@@ -12,12 +12,13 @@ const controllers = require('../Controllers/userController');
 user_route.get('/signup',controllers.signupLoad);
 user_route.post('/signup',controllers.signup);
 
-user_route.get('/', controllers.loginLoad);  // Default home page route after login
+user_route.get('/login', controllers.loginLoad);  // Default home page route after login
 user_route.post('/login', controllers.login);  // Login route
 
 user_route.get('/seller',controllers.sellerLoad);
 user_route.post('/seller', controllers.seller);
 
+user_route.get('/', controllers.home);
 
 
 

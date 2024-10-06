@@ -9,23 +9,29 @@
     <h1 style="text-align: center;">Welcome to the home page</h1>
     <h2 style="text-align: center;">Hello, <%= username %>!</h2> 
     <p><a href="/seller">Sell Ticket</a></p>
-    <input type="search" placeholder="Search...">
+
+    <!-- Search form -->
+    <form action="/" method="GET" style="text-align: center;">
+        <input type="search" name="source" placeholder="Search by source..." value="<%= searchQuery || '' %>">
+        <button type="submit">Search</button>
+    </form>
+
     <h2>Available Tickets</h2>
-<% if (tickets && tickets.length > 0) { %> <!-- Check if tickets is defined and has items -->
-    <ul>
-        <% tickets.forEach(ticket => { %>
-            <li>
-                <strong>Source:</strong> <%= ticket.source %>, 
-                <strong>Destination:</strong> <%= ticket.destination %>, 
-                <strong>Price:</strong> <%= ticket.price %>, 
-                <strong>Tickets Available:</strong> <%= ticket.ticket %>, 
-                <strong>Comments:</strong> <%= ticket.comments %>
-            </li>
-        <% }); %>
-    </ul>
-<% } else { %>
-    <p>No tickets available.</p>
-<% } %>
+    <% if (tickets && tickets.length > 0) { %> <!-- Check if tickets is defined and has items -->
+        <ul>
+            <% tickets.forEach(ticket => { %>
+                <li>
+                    <strong>Source:</strong> <%= ticket.source %>, 
+                    <strong>Destination:</strong> <%= ticket.destination %>, 
+                    <strong>Price:</strong> <%= ticket.price %>, 
+                    <strong>Tickets Available:</strong> <%= ticket.ticket %>, 
+                    <strong>Comments:</strong> <%= ticket.comments %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No tickets available.</p>
+    <% } %>
 
 </body>
 </html>
