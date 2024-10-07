@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Details</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1 style="text-align: center;">Ticket Details</h1>
+    <div style="text-align: center;">
+        <p><strong>Source:</strong> <%= ticket.source %></p>
+        <p><strong>Destination:</strong> <%= ticket.destination %></p>
+        <p><strong>Price:</strong> $<%= ticket.price %></p>
+        <p><strong>Tickets Available:</strong> <%= ticket.ticket %></p>
+        <p><strong>Comments:</strong> <%= ticket.comments %></p>
+
+        <!-- Add a button to go back to the home page -->
+        <a href="/" style="display: inline-block; padding: 10px 20px; background-color: #ccc; text-decoration: none;">Back to Home</a>
+    </div>
+</body>
+</html>

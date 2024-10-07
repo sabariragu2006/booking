@@ -125,11 +125,24 @@ const home = async (req, res) => {
     }
 };
 
-// Route to handle GET request for the home page and search
+const ticket =async (req, res) => {
+    try {
+        const ticketId = req.params.id;
+        const ticket = await Ticket.findById(ticketId); // Fetch ticket details from the database
+        
+        if (!ticket) {
+            return res.status(404).send('Ticket not found');
+        }
 
+        res.render('ticket', { ticket }); // Render the ticket.ejs template with ticket data
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+};
 
 module.exports={
-    login,loginLoad,signup,signupLoad,seller,sellerLoad,home
+    login,loginLoad,signup,signupLoad,seller,sellerLoad,home,ticket
 }
 
 
