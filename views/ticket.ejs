@@ -5,18 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Details</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Add styles for the sidebar to display tickets in single blocks */
+        .sidebar {
+            display: grid;
+            width: 300px; /* Adjust the width as per your design */
+            padding: 20px;
+            border-right: 1px solid #ccc; /* Add a border to distinguish the sidebar */
+        }
+
+        /* Each ticket item in the sidebar */
+        .ticket-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .ticket-item:hover {
+            background-color: #e0e0e0; /* Change background color on hover */
+        }
+
+        .ticket-item p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
-    <h1 style="text-align: center;">Ticket Details</h1>
-    <div style="text-align: center;">
-        <p><strong>Source:</strong> <%= ticket.source %></p>
-        <p><strong>Destination:</strong> <%= ticket.destination %></p>
-        <p><strong>Price:</strong> $<%= ticket.price %></p>
-        <p><strong>Tickets Available:</strong> <%= ticket.ticket %></p>
-        <p><strong>Comments:</strong> <%= ticket.comments %></p>
-
-        <!-- Add a button to go back to the home page -->
-        <a href="/" style="display: inline-block; padding: 10px 20px; background-color: #ccc; text-decoration: none;">Back to Home</a>
+    <div class="k" style="display: flex;">
+        <!-- Sidebar section to show available tickets in individual blocks -->
+        <div class="sidebar">
+            <h2>Available Tickets</h2>
+            <% if (tickets && tickets.length > 0) { %>
+                <% tickets.forEach(ticket => { %>
+                    <div class="ticket-item" onclick="viewTicket('<%= ticket._id %>')">
+                        <p><strong>Source:</strong> <%= ticket.source %></p>
+                        <p><strong>Destination:</strong> <%= ticket.destination %></p>
+                        <p><strong>Price:</strong> $<%= ticket.price %></p>
+                        <p><strong>Tickets Available:</strong> <%= ticket.ticket %></p>
+                        <p><strong>Comments:</strong> <%= ticket.comments %></p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No tickets available.</p>
+            <% } %>
+        </div>
+        
+        <!-- Main content section to show selected ticket details -->
+        <div style="text-align: center; flex: 1;">
+            <h1 style="text-align: center;">Ticket Details</h1>
+            <p><strong>Source:</strong> <%= ticket.source %></p>
+            <p><strong>Destination:</strong> <%= ticket.destination %></p>
+            <p><strong>Price:</strong> $<%= ticket.price %></p>
+            <p><strong>Tickets Available:</strong> <%= ticket.ticket %></p>
+            <p><strong>Comments:</strong> <%= ticket.comments %></p>
+    
+            <!-- Add a button to go back to the home page -->
+            <a href="/home" style="display: inline-block; padding: 10px 20px; background-color: #ccc; text-decoration: none;">Back to Home</a>
+        </div>
     </div>
+
+    <script>
+        function viewTicket(ticketId) {
+            // Redirect to the ticket details page when a ticket is clicked in the sidebar
+            window.location.href = `/ticket/${ticketId}`;
+        }
+    </script>
 </body>
 </html>

@@ -127,19 +127,23 @@ const home = async (req, res) => {
 
 const ticket =async (req, res) => {
     try {
-        const ticketId = req.params.id;
-        const ticket = await Ticket.findById(ticketId); // Fetch ticket details from the database
+        const ticketId = req.params.id; // Get the specific ticket ID from the URL
+        const ticket = await Ticket.findById(ticketId); // Fetch the ticket with this ID
         
         if (!ticket) {
             return res.status(404).send('Ticket not found');
         }
 
-        res.render('ticket', { ticket }); // Render the ticket.ejs template with ticket data
+        const tickets = await Ticket.find(); // Fetch all tickets for the sidebar
+
+        // Render 'ticket.ejs' and pass both 'ticket' and 'tickets'
+        res.render('ticket', { ticket, tickets });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server Error');
+        res.status(500).send('Server error');
     }
 };
+
 
 module.exports={
     login,loginLoad,signup,signupLoad,seller,sellerLoad,home,ticket
